@@ -69,7 +69,6 @@ set<pair<COutPoint, unsigned int> > setStakeSeen;
 // active chain, or the staking input was spent in the past 100 blocks after the height
 // of the incoming block.
 map<COutPoint, int> mapStakeSpent;
-set<pair<COutPoint, unsigned int> > setStakeSeen;
 map<unsigned int, unsigned int> mapHashedBlocks;
 CChain chainActive;
 CBlockIndex* pindexBestHeader = NULL;
