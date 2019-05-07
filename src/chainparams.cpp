@@ -12,7 +12,8 @@
 #include "random.h"
 #include "util.h"
 #include "utilstrencodings.h"
-
+#include "net.h"
+#include "base58.h"
 #include <assert.h>
 
 #include <boost/assign/list_of.hpp>
@@ -98,6 +99,7 @@ public:
     {
         networkID = CBaseChainParams::MAIN;
         strNetworkID = "main";
+		vTreasuryRewardAddress="";
         pchMessageStart[0] = 0x01;
         pchMessageStart[1] = 0xf3;
         pchMessageStart[2] = 0x02;
@@ -195,6 +197,18 @@ public:
         return data;
     }
 };
+std::string CChainParams::GetTreasuryRewardAddressAtHeight(int nHeight) const {
+    return vTreasuryRewardAddress;
+}
+
+CScript CChainParams::GetTreasuryRewardScriptAtHeight(int nHeight) const {
+    CBitcoinAddress address(GetTreasuryRewardAddressAtHeight(nHeight).c_str());
+    assert(address.IsValid());
+
+    CScript script = GetScriptForDestination(address.Get());
+    return script; 
+}
+
 static CMainParams mainParams;
 
 /**
