@@ -3469,8 +3469,6 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
     int nHeight = pindex->nHeight;
 if (block.IsProofOfStake()) {
 
-        int64_t nStartTime = GetTimeMillis();
-
         LOCK(cs_main);
 
         CCoinsViewCache coins(pcoinsTip);
@@ -3490,7 +3488,7 @@ if (block.IsProofOfStake()) {
         }
 
         // if this is on a fork
-        if (!chainActive.Contains(pindexPrev)) {
+        if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL) {
             // start at the block we're adding on to
             CBlockIndex *last = pindexPrev;
 
@@ -3516,8 +3514,6 @@ if (block.IsProofOfStake()) {
                 last = last->pprev;
             }
         }
-
-        LogPrintf("Stake txchecks took %dms\n", (GetTimeMillis() - nStartTime));
     }
 
     // Write block to history file
