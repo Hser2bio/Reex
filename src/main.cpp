@@ -3488,7 +3488,7 @@ if (block.IsProofOfStake()) {
         }
 
         // if this is on a fork
-        if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL) {
+        if (!chainActive.Contains(pindexPrev)){
             // start at the block we're adding on to
             CBlockIndex *last = pindexPrev;
 
